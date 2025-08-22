@@ -5,10 +5,12 @@ import { validateEnv } from './config/env.validation';
 import { User } from './auth/entities/user.entity';
 import { Challenge } from './challenges/entities/challenge.entity';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { ChallengesModule } from './challenges/challenges.module';
 
 @Module({
   imports: [
-  ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }),
+    ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'mysql',

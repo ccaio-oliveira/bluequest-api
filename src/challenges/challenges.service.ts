@@ -46,7 +46,7 @@ export class ChallengesService {
     async update(ownerId: string, id: string, patch: Partial<CreateChallengeDto>) {
         const c = await this.repo.findOne({ where: { id }, relations: ['owner'] });
         if (!c || c.owner.id !== ownerId) throw new ForbiddenException('NOT_OWNER');
-        if (new Date() > new Date(c.endAtUTC)) throw new ForbiddenException('PAST_END');
+        if (Date.now() > c.endAtUTC!.getTime()) throw new ForbiddenException('PAST_END');
         Object.assign(c, patch);
         return this.repo.save(c);
     }

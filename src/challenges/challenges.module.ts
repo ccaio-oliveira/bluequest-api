@@ -10,4 +10,4 @@ import { ChallengesController } from "./challenges.controller";
     providers: [ChallengesService],
     controllers: [ChallengesController],
 })
-export class ChallengeModule {}
+export class ChallengesModule {}
