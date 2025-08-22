@@ -8,13 +8,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.enableCors({ origin: true, credentials: true });
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   const config = new DocumentBuilder()
   .setTitle('BlueQuest API')
-  .setDescription('Bootstrap mínimo')
-  .setVersion('0.0.1')
+  .setDescription('Auth, Users, Challenges (MVP skeleton)')
+  .setVersion('0.1.0')
   .build();
 
   const document = SwaggerModule.createDocument(app, config);
