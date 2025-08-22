@@ -1,0 +1,28 @@
+name: api-ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: bluequest
+          MYSQL_USER: bluequest
+          MYSQL_PASSWORD: bluequest
+          MYSQL_ROOT_PASSWORD: root
+        ports: [ '3306:3306' ]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root -proot"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: |
+          cp .env.example .env
+          npx ts-node ./node_modules/typeorm/cli.js migration:run -d src/database/data-source.ts
+      - run: npm test
