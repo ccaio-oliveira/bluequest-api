@@ -3,10 +3,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Challenge } from "./entities/challenge.entity";
 import { Repository } from "typeorm";
 import { User } from "src/auth/entities/user.entity";
+import { CreateChallengeDto } from "./dtos/create-challenge.dto";
 
-export interface CreateChallengeDto {
-    title: string; description?: string;
-    startAtUTC: string; endAtUTC: string;
+export interface CreateChallengeInput {
+    title: string;
+    description?: string;
+    startAtUTC: string;
+    endAtUTC: string;
     rulesJSON: Record<string, any>;
     isInviteOnly?: boolean;
 }
@@ -17,6 +20,11 @@ export class ChallengesService {
         @InjectRepository(Challenge) private readonly repo: Repository<Challenge>,
         @InjectRepository(User) private readonly users: Repository<User>,
     ) {}
+
+    private ensureEditable(ch: Challenge) {
+        const now = new Date();
+        if (now > ch.endAtUTC) throw new ForbiddenException('PAST_END');
+    }
 
     async create(ownerId: string, dto: CreateChallengeDto) {
         const owner = await this.users.findOneByOrFail({ id: ownerId });

@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "src/common/guards/jwt-auth.guard";
-import { ChallengesService, CreateChallengeDto } from "./challenges.service";
+import { ChallengesService } from "./challenges.service";
 import { GetUser } from "src/common/decorators/get-user.decorator";
+import { CreateChallengeDto } from "./dtos/create-challenge.dto";
 
 @ApiTags('challenges')
 @ApiBearerAuth()

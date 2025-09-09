@@ -12,7 +12,7 @@ export class Challenge {
     @Column({ type: 'text', nullable: true }) description?: string;
 
     @Column({ type: 'datetime' }) startAtUTC!: Date;
-    @Column({ type: 'datetime' }) endAtUTC?: Date;
+    @Column({ type: 'datetime' }) endAtUTC!: Date;
 
     @Column({ type: 'json' }) rulesJSON!: Record<string, any>;
     @Column({ type: 'boolean', default: true }) isInviteOnly!: boolean;
