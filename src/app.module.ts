@@ -21,6 +21,7 @@ import { ChallengesModule } from './challenges/challenges.module';
         database: process.env.DB_NAME || 'bluequest',
         entities: [User, Challenge],
         synchronize: false,
+        logging: ['error'],
       }),
     }),
     AuthModule,

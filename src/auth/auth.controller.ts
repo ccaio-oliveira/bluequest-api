@@ -4,6 +4,7 @@ import { AuthService } from "./auth.service";
 import { RegisterDto } from "./dtos/register.dto";
 import { JwtAuthGuard } from "src/common/guards/jwt-auth.guard";
 import { RefreshDto } from "./dtos/refresh.dto";
+import { LoginDto } from "./dtos/login.dto";
 
 @ApiTags('auth')
 @Controller('auth')
@@ -18,7 +19,7 @@ export class AuthController {
 
     @HttpCode(200)
     @Post('login')
-    async login(@Body() dto: RegisterDto) {
+    async login(@Body() dto: LoginDto) {
         const login = await this.auth.login(dto.email, dto.password);
         return login;
     }

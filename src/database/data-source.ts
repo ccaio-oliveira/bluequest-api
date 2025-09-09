@@ -1,6 +1,10 @@
+import 'reflect-metadata';
 import { User } from "src/auth/entities/user.entity";
 import { Challenge } from "src/challenges/entities/challenge.entity";
 import { DataSource } from "typeorm";
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
 
 export const AppDataSource = new DataSource({
     type: 'mysql',
